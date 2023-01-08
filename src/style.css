@@ -76,6 +76,23 @@ li::first-letter{
 .weather-temperature .f-temp{
     text-decoration: none;
 }
+
 .weather-temperature .active{
     text-decoration: none;
 }
+
+.btn{
+    background: #E6A921;
+    border: none;
+}
+
+.btn:hover {
+background:  #E6A921;
+border:1px solid #dadde1;
+}
+
+.bottom-link{
+    color:#E6A921;
+    text-decoration: none;
+}
+
