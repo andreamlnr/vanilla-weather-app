@@ -14,6 +14,34 @@ return `${day} ${hours}:${minutes}`;
 }
 
 
+function displayForecast(){
+    let forecastElement = document.querySelector("#forecast");
+
+    
+    let days = ["Thu", "Fri", "Sat", "Sun"];
+
+    let forecastHTML = `<div class="row">`;
+    days.forEach(function(day){
+        forecastHTML = 
+        forecastHTML + 
+        
+        `<div class="col-2">
+            <div class="weather-forecast-date">${day}</div>
+            <img src="http://shecodes-assets.s3.amazonaws.com/api/weather/icons/mist-night.png" alt="" width="42" />
+       <div class="weather-forecast-temperature">
+        <span class="weather-forecast-temperature-max"> 18° </span>
+        <span class="weather-forecast-temperature-min"> 12° </span>
+       </div>
+        </div>
+    `;
+    });
+
+
+forecastHTML = forecastHTML + `</div>`
+    forecastElement.innerHTML = forecastHTML;
+}
+
+
 function displayTemperature(response){
     let temperatureElement = document.querySelector("#temperature");
     let cityElement = document.querySelector("#city");
@@ -22,6 +50,8 @@ function displayTemperature(response){
     let windElement = document.querySelector("#wind");
     let dateElement = document.querySelector("#date");
     let iconElement = document.querySelector("#icon");
+
+  
 
     celsiusTemperature =  response.data.temperature.current;
 
@@ -35,18 +65,20 @@ function displayTemperature(response){
     iconElement.setAttribute("alt", response.data.condition.description);
 }
 
+
 function search(cityName){
     let apiKey= "3b62fb4t4392eb6o683aa88b00be9cb2";
     let apiUrl=  `https://api.shecodes.io/weather/v1/current?query=${cityName}&key=${apiKey}&units=metric`;
     axios.get(apiUrl).then(displayTemperature);
 }
 
+
 function handleSubmit(event){
     event.preventDefault();
     let cityInputElemnt = document.querySelector("#city-input");
     search(cityInputElemnt.value);
-
 }
+
 
 function displayFahrenheitTemperature(event){
     event.preventDefault();
@@ -68,6 +100,8 @@ function displayCelsiusTemperature(event){
 
 let celsiusTemperature = null;
 
+
+
 let form = document.querySelector("#search-form");
 form.addEventListener("submit", handleSubmit)
 
@@ -78,3 +112,4 @@ let celsiusLink = document.querySelector("#celsius-link");
 celsiusLink.addEventListener("click", displayCelsiusTemperature)
 
 search("Budapest");
+displayForecast();
