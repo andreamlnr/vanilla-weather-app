@@ -14,7 +14,8 @@ return `${day} ${hours}:${minutes}`;
 }
 
 
-function displayForecast(){
+function displayForecast(response){
+    console.log(response.data.daily);
     let forecastElement = document.querySelector("#forecast");
 
     
@@ -41,6 +42,12 @@ forecastHTML = forecastHTML + `</div>`
     forecastElement.innerHTML = forecastHTML;
 }
 
+function getForecast(coordinates){
+    console.log(coordinates);
+    let apiKey= "3b62fb4t4392eb6o683aa88b00be9cb2";
+    let apiUrl = `https://api.shecodes.io/weather/v1/forecast?lon=${coordinates.longitude}&lat=${coordinates.latitude}&key=${apiKey}&units=metric`;
+    axios.get(apiUrl).then(displayForecast);
+}
 
 function displayTemperature(response){
     let temperatureElement = document.querySelector("#temperature");
@@ -63,6 +70,9 @@ function displayTemperature(response){
     dateElement.innerHTML = formatDate(response.data.time * 1000);
     iconElement.setAttribute("src", `http://shecodes-assets.s3.amazonaws.com/api/weather/icons/${response.data.condition.icon}.png` ) ;
     iconElement.setAttribute("alt", response.data.condition.description);
+
+    getForecast(response.data.coordinates);
+
 }
 
 
@@ -112,4 +122,3 @@ let celsiusLink = document.querySelector("#celsius-link");
 celsiusLink.addEventListener("click", displayCelsiusTemperature)
 
 search("Budapest");
-displayForecast();
